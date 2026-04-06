@@ -1,110 +1,140 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 function App() {
+  const [pos, setPos] = useState({ x: 0, y: 0 });
 
+  // Cursor glow tracking
   useEffect(() => {
-    // Google Analytics
-    const script = document.createElement("script");
-    script.src = "https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX";
-    script.async = true;
-    document.body.appendChild(script);
-
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){window.dataLayer.push(arguments);}
-    gtag("js", new Date());
-    gtag("config", "G-XXXXXXXXXX");
-
+    const handleMouseMove = (e) => {
+      setPos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black to-gray-900 text-white px-6 py-10">
+    <div className="relative min-h-screen bg-[#050505] text-white overflow-hidden">
 
-      {/* HERO */}
-      <div className="text-center mt-10">
-        <h1 className="text-4xl md:text-6xl font-bold">
-          HireHunt.in
-        </h1>
-        <p className="text-xl mt-4 text-gray-300">
-          Premium Domain For Sale 🚀
-        </p>
+      {/* 🌈 Moving Gradient Background */}
+      <div className="absolute inset-0 z-0 animate-gradient bg-gradient-to-r from-purple-600 via-blue-500 to-pink-500 opacity-20 blur-3xl" />
 
-        <div className="mt-6">
-          <a
-            href="https://wa.me/919975580530"
-            className="bg-green-500 hover:bg-green-600 px-6 py-3 rounded-xl text-lg font-semibold"
+      {/* 🖱️ Cursor Glow */}
+      <div
+        className="pointer-events-none fixed z-10 w-[300px] h-[300px] rounded-full bg-blue-500 opacity-20 blur-3xl"
+        style={{
+          left: pos.x - 150,
+          top: pos.y - 150,
+        }}
+      />
+
+      {/* 🌟 Content */}
+      <div className="relative z-20 flex items-center justify-center min-h-screen px-6">
+
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-3xl w-full bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-10 text-center shadow-[0_0_80px_rgba(0,0,0,0.6)]"
+        >
+
+          {/* 🔥 HERO TEXT */}
+          <motion.h1
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="text-5xl md:text-7xl font-extrabold bg-gradient-to-r from-purple-400 via-blue-400 to-pink-400 bg-clip-text text-transparent"
           >
-            Contact on WhatsApp
-          </a>
-        </div>
-      </div>
+            HireHunt.in
+          </motion.h1>
 
-      {/* WHY THIS DOMAIN */}
-      <div className="mt-16 max-w-4xl mx-auto">
-        <h2 className="text-2xl font-semibold text-center">
-          Why HireHunt.in?
-        </h2>
+          <p className="mt-4 text-gray-300 text-lg">
+            Build the Next Big Hiring Platform 🚀
+          </p>
 
-        <ul className="mt-6 space-y-4 text-gray-300">
-          <li>✅ Perfect for Job Portal / Hiring Platform</li>
-          <li>✅ Short, Brandable & Easy to Remember</li>
-          <li>✅ Great for Startups, HR Tools & Recruitment Agencies</li>
-          <li>✅ SEO Friendly Keywords (Hire + Hunt)</li>
-          <li>✅ Ideal for Indian Market (.in domain)</li>
-        </ul>
-      </div>
+          <p className="mt-2 text-green-400 font-medium">
+            🚀 We can also build your job portal using this domain
+          </p>
 
-      {/* USE CASES */}
-      <div className="mt-16 max-w-4xl mx-auto">
-        <h2 className="text-2xl font-semibold text-center">
-          Possible Use Cases
-        </h2>
-
-        <div className="grid md:grid-cols-2 gap-6 mt-6">
-          <div className="bg-gray-800 p-6 rounded-xl">
-            Job Portal Website
-          </div>
-          <div className="bg-gray-800 p-6 rounded-xl">
-            Freelance Hiring Platform
-          </div>
-          <div className="bg-gray-800 p-6 rounded-xl">
-            HR SaaS Product
-          </div>
-          <div className="bg-gray-800 p-6 rounded-xl">
-            Recruitment Agency Brand
-          </div>
-        </div>
-      </div>
-
-      {/* CTA */}
-      <div className="mt-20 text-center">
-        <h2 className="text-3xl font-bold">
-          Make an Offer Today 💰
-        </h2>
-        <p className="text-gray-400 mt-2">
-          Serious buyers only. Limited availability.
-        </p>
-
-        <div className="mt-6 flex justify-center gap-4 flex-wrap">
-          <a
-            href="mailto:your@email.com"
-            className="bg-blue-500 px-6 py-3 rounded-xl"
+          {/* ⚡ Animated Tagline */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0, 1, 0.5, 1] }}
+            transition={{ repeat: Infinity, duration: 3 }}
+            className="mt-4 text-yellow-400"
           >
-            Email Me
-          </a>
+            ⚡ Only 1 buyer • Premium domain
+          </motion.p>
 
-          <a
-            href="https://wa.me/919975580530"
-            className="bg-green-500 px-6 py-3 rounded-xl"
-          >
-            WhatsApp
-          </a>
-        </div>
+          {/* 💎 FEATURES */}
+          <div className="mt-8 grid grid-cols-2 gap-4 text-sm md:text-base">
+            {[
+              "💼 Job Portal",
+              "👨‍💻 Freelance Platform",
+              "🏢 Recruitment Brand",
+              "📊 HR SaaS",
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ scale: 1.05 }}
+                className="bg-white/10 p-4 rounded-xl backdrop-blur-md border border-white/10"
+              >
+                {item}
+              </motion.div>
+            ))}
+          </div>
+
+          {/* 💰 PRICE */}
+          <div className="mt-10">
+            <p className="text-gray-400 text-sm">Starting Price</p>
+            <h2 className="text-4xl font-bold text-yellow-400">
+              ₹49,999
+            </h2>
+            <p className="text-red-400 mt-2 text-sm">
+              ⚡ Price increasing soon
+            </p>
+          </div>
+
+          {/* 🚀 CTA */}
+          <div className="mt-8 flex flex-col md:flex-row gap-4 justify-center">
+            <a
+              href="https://wa.me/919975580530?text=I%20want%20to%20buy%20HireHunt.in"
+              className="bg-green-500 hover:bg-green-600 px-6 py-3 rounded-xl font-semibold text-lg transition"
+            >
+              💬 WhatsApp Now
+            </a>
+
+            <a
+              href="https://wa.me/919975580530?text=I%20want%20to%20buy%20HireHunt.in%20for%2049999"
+              className="bg-gradient-to-r from-purple-500 to-blue-500 px-6 py-3 rounded-xl font-semibold text-lg"
+            >
+              💰 Buy Now
+            </a>
+          </div>
+
+          {/* 🔒 TRUST */}
+          <p className="mt-6 text-gray-500 text-sm">
+            🔒 Secure deal • Direct owner • Instant transfer
+          </p>
+
+        </motion.div>
       </div>
 
-      {/* FOOTER */}
-      <div className="mt-20 text-center text-gray-500 text-sm">
-        © 2026 HireHunt.in | Domain For Sale
-      </div>
+      {/* 🎨 Tailwind Custom Animation */}
+      <style>
+        {`
+          @keyframes gradientMove {
+            0% { transform: translateX(-50%) }
+            50% { transform: translateX(50%) }
+            100% { transform: translateX(-50%) }
+          }
+          .animate-gradient {
+            width: 200%;
+            height: 200%;
+            animation: gradientMove 15s ease infinite;
+          }
+        `}
+      </style>
 
     </div>
   );
